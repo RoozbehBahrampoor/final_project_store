@@ -15,3 +15,6 @@ where username='parsa123' and password='parsa896';
 -- Edit
 update admins set name=?, family=?, username=?, password=?, locked=?
 where code=?;
+
+-- Delete
+delete from cars where code =210;

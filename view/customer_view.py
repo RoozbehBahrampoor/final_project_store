@@ -175,5 +175,5 @@ class CustomerView:
         self.family.set(customer.family)
         self.user_name.set(customer.username)
         self.password.set(customer.password)
-        self.phone_number.set(customer.phone)
+        self.phone_number.set(customer.phone_number)
         self.locked.set(bool(customer.locked))
