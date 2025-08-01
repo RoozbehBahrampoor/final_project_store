@@ -1,3 +1,6 @@
+from model.tools.car_validation import *
+
+
 class Car:
     def __init__(self, code, name, model, color, year, price, locked=False):
         self.code = code

@@ -1,3 +1,6 @@
+from model.tools.house_validation import *
+
+
 class House:
     def __init__(self, code, region, address, floor, area, rooms, elevator, parking, storage, year: object, price,
                  locked=False):

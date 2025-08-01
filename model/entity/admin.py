@@ -1,3 +1,6 @@
+from model.tools.admin_validation import *
+
+
 class Admin:
     def __init__(self, code, name, family, username, password, locked=False):
         self.code = code

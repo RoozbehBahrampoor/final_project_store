@@ -1,3 +1,6 @@
+from model.tools.customer_validation import *
+
+
 class Customer:
     def __init__(self, code, name, family, username, password, phone_number, locked=False):
         self.code = code
