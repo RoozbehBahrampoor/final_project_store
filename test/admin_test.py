@@ -1,6 +1,7 @@
+from model.repository.admin_repository import AdminRepository
 from model.entity.admin import Admin
 
+admin = Admin(1, "parsa", "ahmadi", "parsaahmadi", "parsa1234", 0)
 
-admin = Admin(1, "parsa", "ahmadi", "parsaahmadi","parsa1234",0)
-
-print(admin)
+repo = AdminRepository()
+repo.save(admin)

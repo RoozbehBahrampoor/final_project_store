@@ -2,63 +2,68 @@ import sqlite3
 
 
 class AdminRepository:
+    def connect(self):
+        self.connection = sqlite3.connect("store_db.sqlite")
+        self.cursor = self.connection.cursor()
+
+    def disconnect(self, commit=False):
+        if commit:
+            self.connection.commit()
+        self.cursor.close()
+        self.connection.close()
+
     def save(self, admin):
-        connection = sqlite3.connect("store_db.sqlite")
-        cursor = connection.cursor()
-        cursor.execute(
-            "INSERT INTO table_name (FIELD) VALUES (%s,%s,%s,%s,%s,%s)",
-            [data])
-        connection.commit()
-        cusor.close()
-        connection.close()
+        self.connect()
+        self.cursor.execute(
+            """insert into ADMINS
+                   (name, family, username, password, locked)
+               values (?, ?, ?, ?, ?, ?)""",
+            [admin.name, admin.family, admin.username, admin.password, admin.locked])
+        self.disconnect(commit=True)
 
     def edit(self, admin):
-        connection = sqlite3.connect("store_db.sqlite")
-        cursor = connection.cursor()
-        cursor.execute("SQL", [data])
-        connection.commit()
-        cusor.close()
-        connection.close()
+        self.connect()
+        self.cursor.execute("update admins set name=?, family=?, username=?, password=?, locked=?where code=?",
+                            [admin.name, admin.family, admin.username, admin.password, admin.locked,
+                             admin.code])
+        self.disconnect(commit=True)
 
     def delete(self, code):
-        connection = sqlite3.connect("store_db.sqlite")
-        cursor = connection.cursor()
-        cursor.execute("SQL", [data])
-        connection.commit()
-        cusor.close()
-        connection.close()
+        self.connect()
+        self.cursor.execute("delete from admins where code = ?", [code])
+        self.disconnect(commit=True)
 
     def find_all(self):
-        connection = sqlite3.connect("store_db.sqlite")
-        cursor = connection.cursor()
-        cursor.execute("SQL", [data])
-        cusor.close()
-        connection.close()
+        self.connect()
+        self.cursor.execute("select * from admins")
+        admin_list = self.cursor.fetchall()
+        self.disconnect()
+        return admin_list
 
     def find_by_code(self, code):
-        connection = sqlite3.connect("store_db.sqlite")
-        cursor = connection.cursor()
-        cursor.execute("SQL", [data])
-        cusor.close()
-        connection.close()
+        self.connect()
+        self.cursor.execute("select * from admins where code = ?", [code])
+        admin = self.cursor.fetchone()
+        self.disconnect()
+        return admin
 
     def find_by_name_family(self, name, family):
-        connection = sqlite3.connect("store_db.sqlite")
-        cursor = connection.cursor()
-        cursor.execute("SQL", [data])
-        cusor.close()
-        connection.close()
+        self.connect()
+        self.cursor.execute("select * from admins where name like ? and family like ?", [name + "%", family + "%"])
+        admin_list = self.cursor.fetchall()
+        self.disconnect()
+        return admin_list
 
     def find_by_username(self, username):
-        connection = sqlite3.connect("store_db.sqlite")
-        cursor = connection.cursor()
-        cursor.execute("SQL", [data])
-        cusor.close()
-        connection.close()
+        self.connect()
+        self.cursor.execute("select * from admins where username = ?", [username])
+        admin = self.cursor.fetchone()
+        self.disconnect()
+        return admin
 
     def find_by_username_and_password(self, username, password):
-        connection = sqlite3.connect("store_db.sqlite")
-        cursor = connection.cursor()
-        cursor.execute("SQL", [data])
-        cusor.close()
-        connection.close()
+        self.connect()
+        self.cursor.execute("select * from admins where username = ? and password = ?", [username, password])
+        admin = self.cursor.fetchone()
+        self.disconnect()
+        return admin
