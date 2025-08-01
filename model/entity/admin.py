@@ -13,7 +13,7 @@ class Admin:
 
     @code.setter
     def code(self, value):
-        code_validator(value)
+        # code_validator(value)
         self._code = value
 
     @property
@@ -22,7 +22,7 @@ class Admin:
 
     @name.setter
     def name(self, value):
-        name_validator(value)
+        # name_validator(value)
         self._name = value
 
     @property
@@ -31,7 +31,7 @@ class Admin:
 
     @family.setter
     def family(self, value):
-        family_validator(value)
+        # family_validator(value)
         self._family = value
 
     @property
@@ -40,7 +40,7 @@ class Admin:
 
     @username.setter
     def username(self, value):
-        username_validator(value)
+        # username_validator(value)
         self._username = (value)
 
     @property
@@ -49,17 +49,8 @@ class Admin:
 
     @password.setter
     def password(self, value):
-        password_validator(value)
+        # password_validator(value)
         self._password = (value)
-
-    @property
-    def phone_number(self):
-        return self._phone_number
-
-    @phone_number.setter
-    def phone_number(self, value):
-        phone_validator(value)
-        self._phone_number = (value)
 
     @property
     def locked(self):
@@ -67,7 +58,7 @@ class Admin:
 
     @locked.setter
     def locked(self, value):
-        locked_validator(value)
+        # locked_validator(value)
         self._locked = (value)
 
     def __repr__(self):
