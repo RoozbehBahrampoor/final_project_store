@@ -53,6 +53,15 @@ class Admin:
         self._password = (value)
 
     @property
+    def phone_number(self):
+        return self._phone_number
+
+    @phone_number.setter
+    def phone_number(self, value):
+        phone_validator(value)
+        self._phone_number = (value)
+
+    @property
     def locked(self):
         return self._locked
 
