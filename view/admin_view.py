@@ -136,7 +136,7 @@ class AdminView:
                     "",
                     END,
                     values=admin,
-                    tags="Locked" if admin[6] else "OK",
+                    tags="Locked" if admin[5] else "OK",
                 )
         else:
             msg.showerror("Error", "Error getting admins data")

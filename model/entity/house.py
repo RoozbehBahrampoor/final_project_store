@@ -1,5 +1,5 @@
 class House:
-    def __init__(self, code, region, address, floor, area, rooms, elevator, parking, storage, year, price,
+    def __init__(self, code, region, address, floor, area, rooms, elevator, parking, storage, year: object, price,
                  locked=False):
         self.code = code
         self.region = region
@@ -10,7 +10,7 @@ class House:
         self.elevator = elevator
         self.parking = parking
         self.storage = storage
-        self.year_built = year
+        self.year = year
         self.price = price
         self.locked = locked
 
@@ -20,7 +20,7 @@ class House:
 
     @code.setter
     def code(self, value):
-        code_validator(value)
+        # code_validator(value)
         self._code = value
 
     @property
@@ -29,7 +29,7 @@ class House:
 
     @region.setter
     def region(self, value):
-        region_validator(value)
+        # region_validator(value)
         self._region = value
 
     @property
@@ -38,7 +38,7 @@ class House:
 
     @address.setter
     def address(self, value):
-        address_validator(value)
+        # address_validator(value)
         self._address = value
 
     @property
@@ -47,7 +47,7 @@ class House:
 
     @floor.setter
     def floor(self, value):
-        floor_validator(value)
+        # floor_validator(value)
         self._floor = value
 
     @property
@@ -56,7 +56,7 @@ class House:
 
     @area.setter
     def area(self, value):
-        area_validator(value)
+        # area_validator(value)
         self._area = value
 
     @property
@@ -65,7 +65,7 @@ class House:
 
     @rooms.setter
     def rooms(self, value):
-        rooms_validator(value)
+        # rooms_validator(value)
         self._rooms = value
 
     @property
@@ -74,7 +74,7 @@ class House:
 
     @elevator.setter
     def elevator(self, value):
-        elevator_validator(value)
+        # elevator_validator(value)
         self._elevator = value
 
     @property
@@ -83,7 +83,7 @@ class House:
 
     @parking.setter
     def parking(self, value):
-        parking_validator(value)
+        # parking_validator(value)
         self._parking = value
 
     @property
@@ -92,7 +92,7 @@ class House:
 
     @storage.setter
     def storage(self, value):
-        storage_validator(value)
+        # storage_validator(value)
         self._storage = value
 
     @property
@@ -101,7 +101,7 @@ class House:
 
     @year.setter
     def year(self, value):
-        year_validator(value)
+        # year_validator(value)
         self._year = value
 
     @property
@@ -110,7 +110,7 @@ class House:
 
     @price.setter
     def price(self, value):
-        price_validator(value)
+        # price_validator(value)
         self._price = value
 
     @property
@@ -119,7 +119,7 @@ class House:
 
     @locked.setter
     def locked(self, value):
-        locked_validator(value)
+        # locked_validator(value)
         self._locked = (value)
 
     def __repr__(self):

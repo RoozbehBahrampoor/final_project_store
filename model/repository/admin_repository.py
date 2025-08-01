@@ -17,7 +17,7 @@ class AdminRepository:
         self.cursor.execute(
             """insert into ADMINS
                    (name, family, username, password, locked)
-               values (?, ?, ?, ?, ?, ?)""",
+               values (?, ?, ?, ?, ?)""",
             [admin.name, admin.family, admin.username, admin.password, admin.locked])
         self.disconnect(commit=True)
 

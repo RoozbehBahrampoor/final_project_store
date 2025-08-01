@@ -141,6 +141,7 @@ class HouseView:
             self.price.get(),
             self.locked.get(),
         )
+        print(status, message)
         if status:
             msg.showinfo("Save", message)
             self.reset_form()
