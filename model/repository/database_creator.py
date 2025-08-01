@@ -9,7 +9,7 @@ def create_connection():
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS ADMINS
                    (
-                       code     integer primary key,
+                       code     integer primary key autoincrement,
                        name     text not null,
                        family   text not null,
                        username text not null unique,
@@ -23,7 +23,7 @@ def create_connection():
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS CUSTOMERS
                    (
-                       code         integer primary key,
+                       code         integer primary key autoincrement,
                        name         text not null,
                        family       text not null,
                        username     text not null unique,
@@ -37,7 +37,7 @@ def create_connection():
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS CARS
                    (
-                       code   integer primary key,
+                       code   integer primary key autoincrement,
                        name   text    not null,
                        model  text    not null,
                        color  text    not null,
@@ -51,7 +51,7 @@ def create_connection():
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS HOUSES
                    (
-                       code     integer primary key,
+                       code     integer primary key autoincrement,
                        region   text    not null,
                        address  text    not null,
                        floor    text    not null,

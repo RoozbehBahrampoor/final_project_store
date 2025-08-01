@@ -22,8 +22,9 @@ def username_validator(username):
 
 
 def password_validator(password):
-    if not re.match(r"^[a-zA-Z\s]{3,30}$", password):
-        raise ValueError("Invalid password !!!")
+    if re.match(r"^[a-zA-Z\s]{3,30}$", password):
+        return
+    raise ValueError("Invalid password !!!")
 
 
 def locked_validator(locked):

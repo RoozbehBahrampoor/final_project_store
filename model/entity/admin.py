@@ -44,7 +44,7 @@ class Admin:
     @username.setter
     def username(self, value):
         # username_validator(value)
-        self._username = (value)
+        self._username = value
 
     @property
     def password(self):
@@ -53,7 +53,7 @@ class Admin:
     @password.setter
     def password(self, value):
         # password_validator(value)
-        self._password = (value)
+        self._password = value
 
     @property
     def locked(self):
