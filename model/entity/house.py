@@ -13,7 +13,7 @@ class House:
         self.elevator = elevator
         self.parking = parking
         self.storage = storage
-        self.year = year
+        self.year_built = year
         self.price = price
         self.locked = locked
 
@@ -32,7 +32,7 @@ class House:
 
     @region.setter
     def region(self, value):
-        # region_validator(value)
+        region_validator(value)
         self._region = value
 
     @property
@@ -41,7 +41,7 @@ class House:
 
     @address.setter
     def address(self, value):
-        # address_validator(value)
+        address_validator(value)
         self._address = value
 
     @property
@@ -50,7 +50,7 @@ class House:
 
     @floor.setter
     def floor(self, value):
-        # floor_validator(value)
+        floor_validator(value)
         self._floor = value
 
     @property
@@ -59,7 +59,7 @@ class House:
 
     @area.setter
     def area(self, value):
-        # area_validator(value)
+        area_validator(value)
         self._area = value
 
     @property
@@ -68,7 +68,7 @@ class House:
 
     @rooms.setter
     def rooms(self, value):
-        # rooms_validator(value)
+        rooms_validator(value)
         self._rooms = value
 
     @property
@@ -77,7 +77,7 @@ class House:
 
     @elevator.setter
     def elevator(self, value):
-        # elevator_validator(value)
+        elevator_validator(value)
         self._elevator = value
 
     @property
@@ -86,7 +86,7 @@ class House:
 
     @parking.setter
     def parking(self, value):
-        # parking_validator(value)
+        parking_validator(value)
         self._parking = value
 
     @property
@@ -95,7 +95,7 @@ class House:
 
     @storage.setter
     def storage(self, value):
-        # storage_validator(value)
+        storage_validator(value)
         self._storage = value
 
     @property
@@ -104,7 +104,7 @@ class House:
 
     @year.setter
     def year(self, value):
-        # year_validator(value)
+        year_validator(value)
         self._year = value
 
     @property
@@ -113,7 +113,7 @@ class House:
 
     @price.setter
     def price(self, value):
-        # price_validator(value)
+        price_validator(value)
         self._price = value
 
     @property
