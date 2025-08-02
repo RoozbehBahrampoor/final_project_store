@@ -10,7 +10,7 @@ from model.entity.house import House
 class HouseView:
     def __init__(self):
         self.win = Tk()
-        self.win.title("House View")
+        self.win.title("house View")
         self.win.geometry("1000x600")
 
         #  code
@@ -30,61 +30,61 @@ class HouseView:
 
         # floor
         Label(self.win, text="Floor").place(x=20, y=170)
-        self.floor = StringVar()
+        self.floor = IntVar()
         Entry(self.win, textvariable=self.floor, width=23).place(x=120, y=170)
 
         # area
         Label(self.win, text="Area").place(x=20, y=220)
-        self.area = StringVar()
+        self.area = IntVar()
         Entry(self.win, textvariable=self.area, width=23).place(x=120, y=220)
 
         # rooms
         Label(self.win, text="Rooms").place(x=20, y=270)
-        self.rooms = StringVar()
+        self.rooms = IntVar()
         Entry(self.win, textvariable=self.rooms, width=23).place(x=120, y=270)
 
         # elevator
         Label(self.win, text="Elevator").place(x=20, y=320)
-        self.elevator = BooleanVar()
+        self.elevator = StringVar()
         Entry(self.win, textvariable=self.elevator, width=23).place(x=120, y=320)
 
         # parking
         Label(self.win, text="Parking").place(x=20, y=370)
-        self.parking = BooleanVar()
+        self.parking = IntVar()
         Entry(self.win, textvariable=self.parking, width=23).place(x=120, y=370)
 
         # storage
         Label(self.win, text="Storage").place(x=20, y=420)
-        self.storage = BooleanVar()
+        self.storage = IntVar()
         Entry(self.win, textvariable=self.storage, width=23).place(x=120, y=420)
 
         # year
         Label(self.win, text="Year").place(x=20, y=470)
-        self.year = StringVar()
+        self.year = IntVar()
         Entry(self.win, textvariable=self.year, width=23).place(x=120, y=470)
 
         # price
-        Label(self.win, text="Price").place(x=20, y=520)
+        Label(self.win, text="Price").place(x=20, y=80)
         self.price = StringVar()
         Entry(self.win, textvariable=self.price, width=23).place(x=120, y=520)
 
         # locked
         Label(self.win, text="Locked").place(x=20, y=570)
         self.locked = BooleanVar()
-        Checkbutton(self.win, text="Locked", variable=self.locked).place(x=120, y=570)
+        Checkbutton(self.win, text="locked", variable=self.locked).place(x=120, y=570)
 
-        # # search_by_region_floor
+        # # search_by_region_address
         Label(self.win, text="Search by Region").place(x=300, y=20)
         self.search_region = StringVar()
         self.search_region_txt = Entry(self.win, textvariable=self.search_region, width=23, fg="gray64")
-        self.search_region_txt.bind("<KeyRelease>", self.search_region_price)
+        self.search_region_txt.bind("<KeyRelease>", self.search_region_address)
         self.search_region_txt.place(x=420, y=20)
 
-        Label(self.win, text="Search by Floor").place(x=550, y=20)
-        self.search_floor = StringVar()
-        self.search_floor_txt = Entry(self.win, textvariable=self.search_floor, width=23, fg="gray64")
-        self.search_floor_txt.bind("<KeyRelease>", self.search_region_floor)
-        self.search_floor_txt.place(x=670, y=20)
+        Label(self.win, text="Search by Address").place(x=550, y=20)
+        self.search_address = StringVar()
+        self.search_address_txt = Entry(self.win, textvariable=self.search_address, width=23, fg="gray64")
+        self.search_address_txt.bind("<KeyRelease>", self.search_region_address)
+        self.search_address_txt.place(x=670, y=20)
 
         self.table = ttk.Treeview(self.win, columns=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], show="headings")
         self.table.heading(1, text="Code")
@@ -118,9 +118,9 @@ class HouseView:
         self.table.bind("<ButtonRelease>", self.select_house)
         self.table.place(x=300, y=100, height=460)
 
-        Button(self.win, text="Save", command=self.save_click, width=34, height=2).place(x=20, y=600)
-        Button(self.win, text="Edit", command=self.edit_click, width=15, height=2).place(x=20, y=670)
-        Button(self.win, text="Delete", command=self.delete_click, width=15, height=2).place(x=152, y=670)
+        Button(self.win, text="Save", command=self.save_click, width=34, height=2).place(x=20, y=450)
+        Button(self.win, text="Edit", command=self.edit_click, width=15, height=2).place(x=20, y=520)
+        Button(self.win, text="Delete", command=self.delete_click, width=15, height=2).place(x=152, y=520)
 
         self.reset_form()
 
@@ -129,6 +129,7 @@ class HouseView:
     def save_click(self):
         house_controller = HouseController()
         status, message = house_controller.save(
+            self.name.get(),
             self.region.get(),
             self.address.get(),
             self.floor.get(),
@@ -150,7 +151,7 @@ class HouseView:
     def edit_click(self):
         house_controller = HouseController()
         status, message = house_controller.edit(
-            self.code.get(),
+            self.name.get(),
             self.region.get(),
             self.address.get(),
             self.floor.get(),
@@ -185,36 +186,36 @@ class HouseView:
             for item in self.table.get_children():
                 self.table.delete(item)
 
-            for user in house_list:
+            for house in house_list:
                 self.table.insert(
                     "",
                     END,
-                    values=House,
-                    tags="Locked" if House[12] else "OK",
+                    values=house,
+                    tags="Locked" if admin[12] else "OK",
                 )
         else:
             msg.showerror("Error", "Error getting houses data")
 
-    def reset_form(self):
-        self.code.set(0)
-        self.region.set("")
-        self.address.set("")
-        self.floor.set("")
-        self.area.set("")
-        self.rooms.set("")
-        self.elevator.set("")
-        self.parking.set("")
-        self.storage.set("")
-        self.year.set("")
-        self.price.set("")
-        self.locked.set(False)
+    def reset_form(self) -> None:
+        self.name.set(0),
+        self.region.set(""),
+        self.address.set(""),
+        self.floor.set(0),
+        self.area.set(""),
+        self.rooms.set(""),
+        self.elevator.set(""),
+        self.parking.set(""),
+        self.storage.set(""),
+        self.year.set(""),
+        self.price.set(""),
+        self.locked.set(False),
         house_controller = HouseController()
         status, house_list = house_controller.find_all()
         self.show_data_on_table(status, house_list)
 
-    def search_price_year(self, event):
+    def search_year_price(self, event):
         house_controller = HouseController()
-        status, house_list = house_controller.find_by_price_year(self.search_price.get(), self.search_year.get())
+        status, house_list = house_controller.find_by_year_price(self.search_year.get(), self.search_price.get())
         self.show_data_on_table(status, house_list)
 
     def select_house(self, event):
@@ -230,5 +231,4 @@ class HouseView:
         self.storage.set(house.storage)
         self.year.set(house.year)
         self.price.set(house.price)
-        self.locked.set(bool(house.locked))
-
+        self.locked.set(house.locked)
