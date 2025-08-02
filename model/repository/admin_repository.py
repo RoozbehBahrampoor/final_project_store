@@ -18,7 +18,7 @@ class AdminRepository:
             """insert into ADMINS
                    (name, family, username, password, locked)
                values (?, ?, ?, ?, ?)""",
-            [admin.name, admin.famil, admin.username, admin.password, admin.locked])
+            [admin.name, admin.family, admin.username, admin.password, admin.locked])
         self.disconnect(commit=True)
 
     def edit(self, admin):

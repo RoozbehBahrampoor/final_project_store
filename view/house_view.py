@@ -141,7 +141,6 @@ class HouseView:
             self.price.get(),
             self.locked.get(),
         )
-        print(status, message)
         if status:
             msg.showinfo("Save", message)
             self.reset_form()
@@ -191,7 +190,7 @@ class HouseView:
                     "",
                     END,
                     values=House,
-                    tags="Locked" if house[6] else "OK",
+                    tags="Locked" if House[12] else "OK",
                 )
         else:
             msg.showerror("Error", "Error getting houses data")
@@ -203,9 +202,9 @@ class HouseView:
         self.floor.set("")
         self.area.set("")
         self.rooms.set("")
-        self.elevator.set(False)
-        self.parking.set(False)
-        self.storage.set(False)
+        self.elevator.set("")
+        self.parking.set("")
+        self.storage.set("")
         self.year.set("")
         self.price.set("")
         self.locked.set(False)
@@ -233,5 +232,3 @@ class HouseView:
         self.price.set(house.price)
         self.locked.set(bool(house.locked))
 
-    def search_region_floor(self, event):
-        pass
