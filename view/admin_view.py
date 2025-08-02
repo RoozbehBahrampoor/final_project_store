@@ -60,7 +60,7 @@ class AdminView:
         self.table.heading(1, text="Code")
         self.table.heading(2, text="Name")
         self.table.heading(3, text="Family")
-        self.table.heading(4, text="Username")
+        self.table.heading(4, text="User Name")
         self.table.heading(5, text="Password")
         self.table.heading(6, text="Locked")
 
@@ -92,6 +92,7 @@ class AdminView:
             self.user_name.get(),
             self.password.get(),
             self.locked.get(),
+
         )
         if status:
             msg.showinfo("Save", message)

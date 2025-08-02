@@ -191,7 +191,7 @@ class HouseView:
                     "",
                     END,
                     values=House,
-                    tags="Locked" if House[6] else "OK",
+                    tags="Locked" if house[6] else "OK",
                 )
         else:
             msg.showerror("Error", "Error getting houses data")
