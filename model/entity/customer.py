@@ -45,7 +45,7 @@ class Customer:
     @username.setter
     def username(self, value):
         # username_validator(value)
-        self._username = (value)
+        self._username = value
 
     @property
     def password(self):
@@ -54,7 +54,7 @@ class Customer:
     @password.setter
     def password(self, value):
         # password_validator(value)
-        self._password = (value)
+        self._password = value
 
     @property
     def phone_number(self):
@@ -63,7 +63,7 @@ class Customer:
     @phone_number.setter
     def phone_number(self, value):
         # phone_validator(value)
-        self._phone_number = (value)
+        self._phone_number = value
 
     @property
     def locked(self):
@@ -72,7 +72,7 @@ class Customer:
     @locked.setter
     def locked(self, value):
         # locked_validator(value)
-        self._locked = (value)
+        self._locked = value
 
     def __repr__(self):
         return f"{self.__dict__}"

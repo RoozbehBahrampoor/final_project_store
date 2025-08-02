@@ -62,7 +62,7 @@ class Admin:
     @locked.setter
     def locked(self, value):
         # locked_validator(value)
-        self._locked = (value)
+        self._locked = value
 
     def __repr__(self):
         return f"{self.__dict__}"

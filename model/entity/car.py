@@ -18,7 +18,7 @@ class Car:
     @code.setter
     def code(self, value):
         # code_validator(value)
-        self._code = (value)
+        self._code = value
 
     @property
     def name(self):
@@ -72,7 +72,7 @@ class Car:
     @locked.setter
     def locked(self, value):
         # locked_validator(value)
-        self._locked = (value)
+        self._locked = value
 
     def __repr__(self):
         return f"{self.__dict__}"
