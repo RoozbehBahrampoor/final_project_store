@@ -4,6 +4,7 @@ from tkinter import *
 from tkinter import ttk as ttk
 from tkinter import messagebox as msg
 
+from model.entity.admin import Admin
 from model.entity.house import House
 
 
@@ -190,12 +191,12 @@ class HouseView:
                     "",
                     END,
                     values=House,
-                    tags="Locked" if House[6] else "OK",
+                    tags="OK" if not house[6] else "Locked",
                 )
         else:
             msg.showerror("Error", "Error getting houses data")
 
-    def reset_form(self):
+    def reset_form(self) -> None:
         self.code.set(0)
         self.region.set("")
         self.address.set("")
@@ -232,4 +233,5 @@ class HouseView:
         self.price.set(house.price)
         self.locked.set(bool(house.locked))
 
-
+    def search_region_floor(self, event):
+        pass

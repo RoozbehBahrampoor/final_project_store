@@ -13,7 +13,7 @@ class House:
         self.elevator = elevator
         self.parking = parking
         self.storage = storage
-        self.year_built = year
+        self.year = year
         self.price = price
         self.locked = locked
 
