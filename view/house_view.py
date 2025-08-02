@@ -77,7 +77,7 @@ class HouseView:
         Label(self.win, text="Search by Region").place(x=300, y=20)
         self.search_region = StringVar()
         self.search_region_txt = Entry(self.win, textvariable=self.search_region, width=23, fg="gray64")
-        self.search_region_txt.bind("<KeyRelease>", self.search_region_floor)
+        self.search_region_txt.bind("<KeyRelease>", self.search_region_price)
         self.search_region_txt.place(x=420, y=20)
 
         Label(self.win, text="Search by Floor").place(x=550, y=20)
