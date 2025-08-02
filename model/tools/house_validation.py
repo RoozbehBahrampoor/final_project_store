@@ -12,47 +12,47 @@ def region_validator(region):
 
 
 def address_validator(address):
-    if not re.match(r"^[a-zA-Z\s]{3,30}$", address):
+    if not re.match(r"^[a-zA-Z0-9\s,.-]{3,100}$", address):
         raise ValueError("Invalid address !!!")
 
 
 def floor_validator(floor):
-    if not re.match(r'^[0-9]{4}-[0-9]{2}-[0-9]{2}$', floor):
+    if type(floor) == str and code > 0:
         raise ValueError("Invalid floor !!!")
 
 
 def area_validator(area):
-    if not re.match(r"^[0-9]{4}-[0-9]{2}$", area):
+    if type(area) == str and area > 0:
         raise ValueError("Invalid area !!!")
 
 
 def rooms_validator(rooms):
-    if not re.match(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$", rooms):
+    if type(rooms) == str and rooms > 0:
         raise ValueError("Invalid rooms !!!")
 
 
 def elevator_validator(elevator):
-    if not re.match(r"^[a-zA-Z\s]{3,30}$", elevator):
+    if str(elevator) not in ["0", "1"]:
         raise ValueError("Invalid elevator !!!")
 
 
 def parking_validator(parking):
-    if not re.match(r"^[a-zA-Z\s]{3,30}$", parking):
+    if str(elevator) not in ["0", "1"]:
         raise ValueError("Invalid parking !!!")
 
 
 def storage_validator(storage):
-    if not re.match(r'^[0-9]{4}-[0-9]{2}-[0-9]{2}$', storage):
+    if str(elevator) not in ["0", "1"]:
         raise ValueError("Invalid storage !!!")
 
 
 def year_validator(year):
-    if not re.match(r'^[0-9]{4}-[0-9]{2}-[0-9]{2}$', year):
+    if type(year) == int and year > 0:
         raise ValueError("Invalid year !!!")
 
 
 def price_validator(price):
-    if not re.match(r"^[0-9]{6}$", str(price)):
+    if not re.match(r"^[0-9]{6}$", (price)):
         raise ValueError("Invalid price !!!")
 
 

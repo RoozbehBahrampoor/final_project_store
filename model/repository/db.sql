@@ -83,4 +83,4 @@ where code=?;
 -- Delete
 delete
 from houses
-where code = 1;
+where code = 1000;
