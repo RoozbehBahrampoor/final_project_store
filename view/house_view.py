@@ -4,7 +4,6 @@ from tkinter import *
 from tkinter import ttk as ttk
 from tkinter import messagebox as msg
 
-from model.entity.admin import Admin
 from model.entity.house import House
 
 
@@ -186,17 +185,17 @@ class HouseView:
             for item in self.table.get_children():
                 self.table.delete(item)
 
-            for user in house_list:
+            for house in house_list:
                 self.table.insert(
                     "",
                     END,
-                    values=House,
-                    tags="OK" if not house[6] else "Locked",
+                    values=house,
+                    tags="Locked" if house[6] else "OK",
                 )
         else:
             msg.showerror("Error", "Error getting houses data")
 
-    def reset_form(self) -> None:
+    def reset_form(self):
         self.code.set(0)
         self.region.set("")
         self.address.set("")

@@ -145,7 +145,7 @@ class CustomerView:
                     "",
                     END,
                     values=customer,
-                    tags="Locked" if customer[6] else "OK",
+                    tags="Locked" if customer [6] else "OK",
                 )
         else:
             msg.showerror("Error", "Error getting customers data")

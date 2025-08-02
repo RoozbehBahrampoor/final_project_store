@@ -13,7 +13,7 @@ class House:
         self.elevator = elevator
         self.parking = parking
         self.storage = storage
-        self.year = year
+        self.year_= year
         self.price = price
         self.locked = locked
 
@@ -123,7 +123,7 @@ class House:
     @locked.setter
     def locked(self, value):
         # locked_validator(value)
-        self._locked = value
+        self._locked = (value)
 
     def __repr__(self):
         return f"{self.__dict__}"
