@@ -1,4 +1,3 @@
-from controller import house_controller
 from controller.house_controller import HouseController
 from tkinter import *
 from tkinter import ttk as ttk
@@ -43,48 +42,48 @@ class HouseView:
         self.rooms = StringVar()
         Entry(self.win, textvariable=self.rooms, width=23).place(x=120, y=270)
 
-        # elevator
-        Label(self.win, text="Elevator").place(x=20, y=320)
-        self.elevator = BooleanVar()
-        Entry(self.win, textvariable=self.elevator, width=23).place(x=120, y=320)
-
-        # parking
-        Label(self.win, text="Parking").place(x=20, y=370)
-        self.parking = BooleanVar()
-        Entry(self.win, textvariable=self.parking, width=23).place(x=120, y=370)
-
-        # storage
-        Label(self.win, text="Storage").place(x=20, y=420)
-        self.storage = BooleanVar()
-        Entry(self.win, textvariable=self.storage, width=23).place(x=120, y=420)
-
         # year
-        Label(self.win, text="Year").place(x=20, y=470)
+        Label(self.win, text="Year").place(x=20, y=320)
         self.year = StringVar()
-        Entry(self.win, textvariable=self.year, width=23).place(x=120, y=470)
+        Entry(self.win, textvariable=self.year, width=23).place(x=120, y=320)
 
         # price
-        Label(self.win, text="Price").place(x=20, y=520)
+        Label(self.win, text="Price").place(x=20, y=370)
         self.price = StringVar()
-        Entry(self.win, textvariable=self.price, width=23).place(x=120, y=520)
+        Entry(self.win, textvariable=self.price, width=23).place(x=120, y=370)
+
+        # elevator
+        Label(self.win, text="Elevator").place(x=20, y=420)
+        self.elevator = BooleanVar()
+        Checkbutton(self.win, text="Elevator", variable=self.elevator).place(x=120, y=420)
+
+        # parking
+        Label(self.win, text="Parking").place(x=20, y=470)
+        self.parking = BooleanVar()
+        Checkbutton(self.win, text="Parking", variable=self.parking).place(x=120, y=470)
+
+        # storage
+        Label(self.win, text="Storage").place(x=20, y=520)
+        self.storage = BooleanVar()
+        Checkbutton(self.win, text="Storage", variable=self.storage).place(x=120, y=520)
 
         # locked
         Label(self.win, text="Locked").place(x=20, y=570)
         self.locked = BooleanVar()
         Checkbutton(self.win, text="Locked", variable=self.locked).place(x=120, y=570)
 
-        # # search_by_region_floor
+        # search
         Label(self.win, text="Search by Region").place(x=300, y=20)
         self.search_region = StringVar()
         self.search_region_txt = Entry(self.win, textvariable=self.search_region, width=23, fg="gray64")
-        self.search_region_txt.bind("<KeyRelease>", self.search_region_floor)
+        self.search_region_txt.bind("<KeyRelease>", self.search_region_price)
         self.search_region_txt.place(x=420, y=20)
 
-        Label(self.win, text="Search by Floor").place(x=550, y=20)
-        self.search_floor = StringVar()
-        self.search_floor_txt = Entry(self.win, textvariable=self.search_floor, width=23, fg="gray64")
-        self.search_floor_txt.bind("<KeyRelease>", self.search_region_floor)
-        self.search_floor_txt.place(x=670, y=20)
+        Label(self.win, text="Search by Price").place(x=550, y=20)
+        self.search_price = StringVar()
+        self.search_price_txt = Entry(self.win, textvariable=self.search_price, width=23, fg="gray64")
+        self.search_price_txt.bind("<KeyRelease>", self.search_region_price)
+        self.search_price_txt.place(x=670, y=20)
 
         self.table = ttk.Treeview(self.win, columns=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], show="headings")
         self.table.heading(1, text="Code")
@@ -137,8 +136,8 @@ class HouseView:
             self.elevator.get(),
             self.parking.get(),
             self.storage.get(),
-            self.year.get(),
-            self.price.get(),
+            int(self.year.get()),
+            int(self.price.get()),
             self.locked.get(),
         )
         if status:
@@ -159,8 +158,8 @@ class HouseView:
             self.elevator.get(),
             self.parking.get(),
             self.storage.get(),
-            self.year.get(),
-            self.price.get(),
+            int(self.year.get()),
+            int(self.price.get()),
             self.locked.get(),
         )
         if status:
@@ -190,7 +189,7 @@ class HouseView:
                     "",
                     END,
                     values=house,
-                    tags="Locked" if house[6] else "OK",
+                    tags="Locked" if house[11] else "OK",
                 )
         else:
             msg.showerror("Error", "Error getting houses data")
@@ -212,9 +211,9 @@ class HouseView:
         status, house_list = house_controller.find_all()
         self.show_data_on_table(status, house_list)
 
-    def search_price_year(self, event):
+    def search_region_price(self, event):
         house_controller = HouseController()
-        status, house_list = house_controller.find_by_price_year(self.search_price.get(), self.search_year.get())
+        status, house_list = house_controller.find_by_region_price(self.search_region.get(), self.search_price.get())
         self.show_data_on_table(status, house_list)
 
     def select_house(self, event):
@@ -225,12 +224,9 @@ class HouseView:
         self.floor.set(house.floor)
         self.area.set(house.area)
         self.rooms.set(house.rooms)
-        self.elevator.set(house.elevator)
-        self.parking.set(house.parking)
-        self.storage.set(house.storage)
+        self.elevator.set(bool(house.elevator))
+        self.parking.set(bool(house.parking))
+        self.storage.set(bool(house.storage))
         self.year.set(house.year)
         self.price.set(house.price)
         self.locked.set(bool(house.locked))
-
-    def search_region_floor(self, event):
-        pass

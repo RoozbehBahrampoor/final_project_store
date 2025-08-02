@@ -23,7 +23,7 @@ class House:
 
     @code.setter
     def code(self, value):
-        code_validator(value)
+        #code_validator(value)
         self._code = value
 
     @property
