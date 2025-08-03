@@ -127,46 +127,66 @@ class HouseView:
 
     def save_click(self):
         house_controller = HouseController()
-        status, message = house_controller.save(
-            self.region.get(),
-            self.address.get(),
-            self.floor.get(),
-            self.area.get(),
-            self.rooms.get(),
-            self.elevator.get(),
-            self.parking.get(),
-            self.storage.get(),
-            int(self.year.get()),
-            int(self.price.get()),
-            self.locked.get(),
-        )
-        if status:
-            msg.showinfo("Save", message)
-            self.reset_form()
-        else:
-            msg.showerror("Save Error", message)
+        try:
+            floor_value = int(self.floor.get())
+            area_value = int(self.area.get())
+            rooms_value = int(self.rooms.get())
+            year_value = int(self.year.get())
+            price_value = int(self.price.get().replace('$', ''))
+
+            status, message = house_controller.save(
+                self.region.get(),
+                self.address.get(),
+                floor_value,
+                area_value,
+                rooms_value,
+                self.elevator.get(),
+                self.parking.get(),
+                self.storage.get(),
+                year_value,
+                price_value,
+                self.locked.get(),
+            )
+            if status:
+                msg.showinfo("Save", message)
+                self.reset_form()
+            else:
+                msg.showerror("Save Error", message)
+        except ValueError:
+            msg.showerror("Input Error",
+                          "All numeric fields (Floor, Area, Rooms, Year, Price) must contain valid numbers.")
 
     def edit_click(self):
         house_controller = HouseController()
-        status, message = house_controller.edit(
-            self.code.get(),
-            self.region.get(),
-            self.address.get(),
-            self.floor.get(),
-            self.area.get(),
-            self.rooms.get(),
-            self.elevator.get(),
-            self.parking.get(),
-            self.storage.get(),
-            int(self.year.get()),
-            int(self.price.get()),
-            self.locked.get(),
-        )
-        if status:
-            msg.showinfo("Edit", message)
-            self.reset_form()
-        else:
-            msg.showerror("Edit Error", message)
+        try:
+            floor_value = int(self.floor.get())
+            area_value = int(self.area.get())
+            rooms_value = int(self.rooms.get())
+            year_value = int(self.year.get())
+            price_value = int(self.price.get().replace('$', ''))
+
+            status, message = house_controller.edit(
+                self.code.get(),
+                self.region.get(),
+                self.address.get(),
+                floor_value,
+                area_value,
+                rooms_value,
+                self.elevator.get(),
+                self.parking.get(),
+                self.storage.get(),
+                year_value,
+                price_value,
+                self.locked.get(),
+            )
+            if status:
+                msg.showinfo("Edit", message)
+                self.reset_form()
+            else:
+                msg.showerror("Edit Error", message)
+        except ValueError:
+            msg.showerror("Input Error",
+                          "All numeric fields (Floor, Area, Rooms, Year, Price) must contain valid numbers.")
 
     def delete_click(self):
         house_controller = HouseController()
@@ -217,16 +237,27 @@ class HouseView:
         self.show_data_on_table(status, house_list)
 
     def select_house(self, event):
-        house = House(*self.table.item(self.table.focus())["values"])
+        selected_item = self.table.focus()
+        if not selected_item:
+            return
+
+        values = self.table.item(selected_item)["values"]
+        # مقادیر عددی 0 و 1 را به True و False تبدیل می‌کنیم
+        values[6] = bool(values[6])  # elevator
+        values[7] = bool(values[7])  # parking
+        values[8] = bool(values[8])  # storage
+        values[11] = bool(values[11])  # locked
+
+        house = House(*values)
         self.code.set(house.code)
         self.region.set(house.region)
         self.address.set(house.address)
         self.floor.set(house.floor)
         self.area.set(house.area)
         self.rooms.set(house.rooms)
-        self.elevator.set(bool(house.elevator))
-        self.parking.set(bool(house.parking))
-        self.storage.set(bool(house.storage))
+        self.elevator.set(house.elevator)
+        self.parking.set(house.parking)
+        self.storage.set(house.storage)
         self.year.set(house.year)
         self.price.set(house.price)
-        self.locked.set(bool(house.locked))
+        self.locked.set(house.locked)
