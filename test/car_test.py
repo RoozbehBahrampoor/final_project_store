@@ -11,4 +11,4 @@ repo.delete(car.code)
 repo.save(car)
 
 print(car)
-print("Car test executed successfully.")
+
