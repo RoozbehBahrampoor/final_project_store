@@ -25,7 +25,7 @@ class CustomerRepository:
     def edit(self, customer):
         self.connect()
         self.cursor.execute(
-            "update customers set name=?, family=?, username=?, password=?, password=?, locked=?where code=?",
+            "update customers set name=?, family=?, username=?, password=?, phone_number=?, locked=? where code=?",
             [customer.name, customer.family, customer.username, customer.password,
              customer.phone_number, customer.locked,
              customer.code])

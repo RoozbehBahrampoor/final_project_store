@@ -64,3 +64,10 @@ class CarController:
             return True, car_repo.find_by_model_and_color(model, color)
         except Exception as e:
             return False, f"Error find cars model :color {model}:{color}  -- Error :{e}"
+
+    def find_by_name_and_price(self, name, price):
+        try:
+            car_repo = CarRepository()
+            return True, car_repo.find_by_name_and_price(name, price)
+        except Exception as e:
+            return False, f"Error find cars name :price {name}:{price}  -- Error :{e}"

@@ -6,6 +6,13 @@ from tkinter import messagebox as msg
 from model.entity.house import House
 
 
+def format_number_with_dots(number):
+    try:
+        return "{:,.0f}".format(number).replace(',', '.')
+    except (ValueError, TypeError):
+        return str(number)
+
+
 class HouseView:
     def __init__(self):
         self.win = Tk()
@@ -128,11 +135,13 @@ class HouseView:
     def save_click(self):
         house_controller = HouseController()
         try:
-            floor_value = int(self.floor.get())
-            area_value = int(self.area.get())
-            rooms_value = int(self.rooms.get())
-            year_value = int(self.year.get())
-            price_value = int(self.price.get().replace('$', ''))
+            floor_value = int(self.floor.get()) if self.floor.get() else 0
+            area_value = int(self.area.get()) if self.area.get() else 0
+            rooms_value = int(self.rooms.get()) if self.rooms.get() else 0
+            year_value = int(self.year.get()) if self.year.get() else 0
+
+            price_str = self.price.get()
+            price_value = int(price_str.replace('$', '').replace(',', '').replace('.', '')) if price_str else 0
 
             status, message = house_controller.save(
                 self.region.get(),
@@ -153,17 +162,18 @@ class HouseView:
             else:
                 msg.showerror("Save Error", message)
         except ValueError:
-            msg.showerror("Input Error",
-                          "All numeric fields (Floor, Area, Rooms, Year, Price) must contain valid numbers.")
+            msg.showerror("Input Error", "All numeric fields must contain valid numbers.")
 
     def edit_click(self):
         house_controller = HouseController()
         try:
-            floor_value = int(self.floor.get())
-            area_value = int(self.area.get())
-            rooms_value = int(self.rooms.get())
-            year_value = int(self.year.get())
-            price_value = int(self.price.get().replace('$', ''))
+            floor_value = int(self.floor.get()) if self.floor.get() else 0
+            area_value = int(self.area.get()) if self.area.get() else 0
+            rooms_value = int(self.rooms.get()) if self.rooms.get() else 0
+            year_value = int(self.year.get()) if self.year.get() else 0
+
+            price_str = self.price.get()
+            price_value = int(price_str.replace('$', '').replace(',', '').replace('.', '')) if price_str else 0
 
             status, message = house_controller.edit(
                 self.code.get(),
@@ -185,8 +195,7 @@ class HouseView:
             else:
                 msg.showerror("Edit Error", message)
         except ValueError:
-            msg.showerror("Input Error",
-                          "All numeric fields (Floor, Area, Rooms, Year, Price) must contain valid numbers.")
+            msg.showerror("Input Error", "All numeric fields must contain valid numbers.")
 
     def delete_click(self):
         house_controller = HouseController()
@@ -205,10 +214,13 @@ class HouseView:
                 self.table.delete(item)
 
             for house in house_list:
+                formatted_house = list(house)
+                formatted_house[10] = format_number_with_dots(formatted_house[10])
+
                 self.table.insert(
                     "",
                     END,
-                    values=house,
+                    values=formatted_house,
                     tags="Locked" if house[11] else "OK",
                 )
         else:
@@ -233,7 +245,19 @@ class HouseView:
 
     def search_region_price(self, event):
         house_controller = HouseController()
-        status, house_list = house_controller.find_by_region_price(self.search_region.get(), self.search_price.get())
+        region_value = self.search_region.get()
+        price_str = self.search_price.get()
+
+        if not region_value and not price_str:
+            status, house_list = house_controller.find_all()
+        else:
+            try:
+                price_value = int(price_str.replace('$', '').replace(',', '').replace('.', '')) if price_str else 0
+                status, house_list = house_controller.find_by_region_price(region_value, price_value)
+            except ValueError:
+                msg.showerror("Input Error", "Price must be a valid number for search.")
+                return
+
         self.show_data_on_table(status, house_list)
 
     def select_house(self, event):
@@ -242,22 +266,18 @@ class HouseView:
             return
 
         values = self.table.item(selected_item)["values"]
-        # مقادیر عددی 0 و 1 را به True و False تبدیل می‌کنیم
-        values[6] = bool(values[6])  # elevator
-        values[7] = bool(values[7])  # parking
-        values[8] = bool(values[8])  # storage
-        values[11] = bool(values[11])  # locked
 
-        house = House(*values)
-        self.code.set(house.code)
-        self.region.set(house.region)
-        self.address.set(house.address)
-        self.floor.set(house.floor)
-        self.area.set(house.area)
-        self.rooms.set(house.rooms)
-        self.elevator.set(house.elevator)
-        self.parking.set(house.parking)
-        self.storage.set(house.storage)
-        self.year.set(house.year)
-        self.price.set(house.price)
-        self.locked.set(house.locked)
+        self.code.set(values[0])
+        self.region.set(values[1])
+        self.address.set(values[2])
+        self.floor.set(values[3])
+        self.area.set(values[4])
+        self.rooms.set(values[5])
+
+        self.elevator.set(bool(values[6]))
+        self.parking.set(bool(values[7]))
+        self.storage.set(bool(values[8]))
+
+        self.year.set(values[9])
+        self.price.set(values[10])
+        self.locked.set(bool(values[11]))

@@ -1,5 +1,6 @@
 import sqlite3
 
+
 class HouseRepository:
 
     def save(self, house):
@@ -42,6 +43,13 @@ class HouseRepository:
             house = cursor.fetchone()
             return house
 
+    def find_by_region_price(self, region, price):
+        with sqlite3.connect("store_db.sqlite") as connection:
+            cursor = connection.cursor()
+            cursor.execute("select * from houses where region like ? and price = ?", [region + "%", price])
+            house_list = cursor.fetchall()
+            return house_list
+
     def find_by_region(self, region):
         with sqlite3.connect("store_db.sqlite") as connection:
             cursor = connection.cursor()
@@ -56,10 +64,10 @@ class HouseRepository:
             house = cursor.fetchone()
             return house
 
-    def find_by_area_and_price(self, area, price):
+    def find_by_area_and_parking(self, area, parking):
         with sqlite3.connect("store_db.sqlite") as connection:
             cursor = connection.cursor()
-            cursor.execute("select * from houses where area = ? and price = ?", [area, price])
+            cursor.execute("select * from houses where area = ? and parking = ?", [area, parking])
             house = cursor.fetchone()
             return house
 

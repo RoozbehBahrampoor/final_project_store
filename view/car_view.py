@@ -1,4 +1,3 @@
-from controller import car_controller
 from controller.car_controller import CarController
 from tkinter import *
 from tkinter import ttk as ttk
@@ -48,18 +47,18 @@ class CarView:
         self.locked = BooleanVar()
         Checkbutton(self.win, text="Locked", variable=self.locked).place(x=120, y=320)
 
-        # # search_by_name_price
+        # search
         Label(self.win, text="Search by Name").place(x=300, y=20)
         self.search_name = StringVar()
         self.search_name_txt = Entry(self.win, textvariable=self.search_name, width=23, fg="gray64")
-        self.search_name_txt.bind("<KeyRelease>", self.search_name_color)
+        self.search_name_txt.bind("<KeyRelease>", self.search_name_and_model)
         self.search_name_txt.place(x=420, y=20)
 
-        Label(self.win, text="Search by Price").place(x=550, y=20)
-        self.search_price = StringVar()
-        self.search_price_txt = Entry(self.win, textvariable=self.search_price, width=23, fg="gray64")
-        self.search_price_txt.bind("<KeyRelease>", self.search_name_color)
-        self.search_price_txt.place(x=670, y=20)
+        Label(self.win, text="Search by Model").place(x=550, y=20)
+        self.search_model = StringVar()
+        self.search_model_txt = Entry(self.win, textvariable=self.search_model, width=23, fg="gray64")
+        self.search_model_txt.bind("<KeyRelease>", self.search_name_and_model)
+        self.search_model_txt.place(x=670, y=20)
 
         self.table = ttk.Treeview(self.win, columns=[1, 2, 3, 4, 5, 6, 7, ], show="headings")
         self.table.heading(1, text="Code")
@@ -93,36 +92,58 @@ class CarView:
 
     def save_click(self):
         car_controller = CarController()
-        status, message = car_controller.save(
-            self.name.get(),
-            self.model.get(),
-            self.color.get(),
-            self.year.get(),
-            self.price.get(),
-            self.locked.get(),
-        )
-        if status:
-            msg.showinfo("Save", message)
-            self.reset_form()
-        else:
-            msg.showerror("Save Error", message)
+        try:
+            year_str = self.year.get()
+            price_str = self.price.get()
+
+            # پاک کردن کاراکترهای اضافی و تبدیل به عدد
+            year_value = int(year_str) if year_str else 0
+            # اضافه کردن . برای پاک شدن نقطه در قیمت
+            price_value = int(price_str.replace('$', '').replace(',', '').replace('.', '')) if price_str else 0
+
+            status, message = car_controller.save(
+                self.name.get(),
+                self.model.get(),
+                self.color.get(),
+                year_value,
+                price_value,
+                self.locked.get(),
+            )
+            if status:
+                msg.showinfo("Save", message)
+                self.reset_form()
+            else:
+                msg.showerror("Save Error", message)
+        except ValueError:
+            msg.showerror("Input Error", "Year and Price must be valid numbers. Do not include non-numeric characters.")
 
     def edit_click(self):
         car_controller = CarController()
-        status, message = car_controller.edit(
-            self.code.get(),
-            self.name.get(),
-            self.model.get(),
-            self.color.get(),
-            self.year.get(),
-            self.price.get(),
-            self.locked.get(),
-        )
-        if status:
-            msg.showinfo("Edit", message)
-            self.reset_form()
-        else:
-            msg.showerror("Edit Error", message)
+        try:
+            year_str = self.year.get()
+            price_str = self.price.get()
+
+            # پاک کردن کاراکترهای اضافی و تبدیل به عدد
+            year_value = int(year_str) if year_str else 0
+            # اضافه کردن . برای پاک شدن نقطه در قیمت
+            price_value = int(price_str.replace('$', '').replace(',', '').replace('.', '')) if price_str else 0
+
+            status, message = car_controller.edit(
+                self.code.get(),
+                self.name.get(),
+                self.model.get(),
+                self.color.get(),
+                year_value,
+                price_value,
+                self.locked.get(),
+            )
+            if status:
+                msg.showinfo("Edit", message)
+                self.reset_form()
+            else:
+                msg.showerror("Edit Error", message)
+        except ValueError:
+            msg.showerror("Input Error", "Year and Price must be valid numbers. Do not include non-numeric characters.")
 
     def delete_click(self):
         car_controller = CarController()
@@ -162,14 +183,18 @@ class CarView:
         status, car_list = car_controller.find_all()
         self.show_data_on_table(status, car_list)
 
-    def search_name_color(self, event):
+    def search_name_and_model(self, event):
         car_controller = CarController()
-        status, car_list = car_controller.find_by_model_and_color(self.search_name.get(),
-                                                                  self.search_color.get())
+        status, car_list = car_controller.find_by_name_model(self.search_name.get(), self.search_model.get())
         self.show_data_on_table(status, car_list)
 
     def select_car(self, event):
-        car = Car(*self.table.item(self.table.focus())["values"])
+        selected_item = self.table.focus()
+        if not selected_item:
+            return
+
+        values = self.table.item(selected_item)["values"]
+        car = Car(*values)
         self.code.set(car.code)
         self.name.set(car.name)
         self.model.set(car.model)
