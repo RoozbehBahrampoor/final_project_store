@@ -2,17 +2,17 @@ import re
 
 
 def code_validator(code):
-    if type(code) == int and code > 0:
-        raise ValueError("Invalid code !!!")
+    pass
 
 
 def name_validator(name):
-    if not re.match(r"^[a-zA-Z\s]{3,30}$", name):
+    if not re.match(r'^[\w\s\-]+$', name):
         raise ValueError("Invalid name !!!")
 
 
 def model_validator(model):
-    if not re.match(r"^[a-zA-Z\s]{3,30}$", model):
+    model = str(model).strip()
+    if not re.match(r'^.+$', model):
         raise ValueError("Invalid model !!!")
 
 
@@ -22,12 +22,12 @@ def color_validator(color):
 
 
 def year_validator(year):
-    if type(year) == int and year > 0:
+    if not re.match(r'^\d{1,4}$', year):
         raise ValueError("Invalid year !!!")
 
 
 def price_validator(price):
-    if not re.match(r"^[0-9]{6}$", (price)):
+    if not re.match(r'^[0-9.]+$', (price)):
         raise ValueError("Invalid price !!!")
 
 

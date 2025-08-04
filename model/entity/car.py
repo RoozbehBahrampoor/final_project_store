@@ -26,7 +26,7 @@ class Car:
 
     @name.setter
     def name(self, value):
-        # name_validator(value)
+        name_validator(value)
         self._name = value
 
     @property
@@ -35,7 +35,7 @@ class Car:
 
     @model.setter
     def model(self, value):
-        # model_validator(value)
+        model_validator(value)
         self._model = value
 
     @property
@@ -44,7 +44,7 @@ class Car:
 
     @color.setter
     def color(self, value):
-        # color_validator(value)
+        color_validator(value)
         self._color = value
 
     @property

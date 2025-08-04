@@ -17,12 +17,13 @@ def family_validator(family):
 
 
 def username_validator(username):
-    if not re.match(r"^[a-zA-Z\s]{3,30}$", username):
+    if not re.match(r".+", username):
         raise ValueError("Invalid username !!!")
 
 
 def password_validator(password):
-    if not re.match(r"^[a-zA-Z\s]{3,30}$", password):
+    password = str(password)
+    if not re.match(r"^[a-zA-Z0-9 _-]+$", password):
         raise ValueError("Invalid password !!!")
 
 

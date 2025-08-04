@@ -25,7 +25,7 @@ class Admin:
 
     @name.setter
     def name(self, value):
-        # name_validator(value)
+        name_validator(value)
         self._name = value
 
     @property
@@ -34,7 +34,7 @@ class Admin:
 
     @family.setter
     def family(self, value):
-        # family_validator(value)
+        family_validator(value)
         self._family = value
 
     @property
@@ -43,7 +43,7 @@ class Admin:
 
     @username.setter
     def username(self, value):
-        # username_validator(value)
+        username_validator(value)
         self._username = value
 
     @property
@@ -52,7 +52,7 @@ class Admin:
 
     @password.setter
     def password(self, value):
-        # password_validator(value)
+        password_validator(value)
         self._password = value
 
     @property
