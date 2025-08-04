@@ -16,10 +16,3 @@ if existing_admin:
 repo.save(admin)
 
 print(admin)
-
-
-
-
-
-
-

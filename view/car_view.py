@@ -96,9 +96,9 @@ class CarView:
             year_str = self.year.get()
             price_str = self.price.get()
 
-            # پاک کردن کاراکترهای اضافی و تبدیل به عدد
+
             year_value = int(year_str) if year_str else 0
-            # اضافه کردن . برای پاک شدن نقطه در قیمت
+
             price_value = int(price_str.replace('$', '').replace(',', '').replace('.', '')) if price_str else 0
 
             status, message = car_controller.save(
@@ -123,9 +123,8 @@ class CarView:
             year_str = self.year.get()
             price_str = self.price.get()
 
-            # پاک کردن کاراکترهای اضافی و تبدیل به عدد
+
             year_value = int(year_str) if year_str else 0
-            # اضافه کردن . برای پاک شدن نقطه در قیمت
             price_value = int(price_str.replace('$', '').replace(',', '').replace('.', '')) if price_str else 0
 
             status, message = car_controller.edit(

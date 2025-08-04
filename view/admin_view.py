@@ -1,4 +1,3 @@
-from controller import admin_controller
 from controller.admin_controller import AdminController
 from tkinter import *
 from tkinter import ttk as ttk

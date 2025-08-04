@@ -16,7 +16,3 @@ if existing_house:
 repo.save(house)
 
 print(house)
-
-
-
-

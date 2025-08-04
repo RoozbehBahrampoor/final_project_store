@@ -16,9 +16,3 @@ if existing_customer:
 repo.save(customer)
 
 print(customer)
-
-
-
-
-
-
