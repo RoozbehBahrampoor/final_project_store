@@ -17,8 +17,10 @@ class Car:
 
     @code.setter
     def code(self, value):
-        # code_validator(value)
+        #code_validator(value)
         self._code = value
+
+
 
     @property
     def name(self):
@@ -27,7 +29,7 @@ class Car:
     @name.setter
     def name(self, value):
         name_validator(value)
-        self._name = value
+        self._name = value.capitalize()
 
     @property
     def model(self):
@@ -36,7 +38,7 @@ class Car:
     @model.setter
     def model(self, value):
         model_validator(value)
-        self._model = value
+        self._model = value.capitalize()
 
     @property
     def color(self):
@@ -45,7 +47,7 @@ class Car:
     @color.setter
     def color(self, value):
         color_validator(value)
-        self._color = value
+        self._color = value.capitalize()
 
     @property
     def year(self):
@@ -53,7 +55,7 @@ class Car:
 
     @year.setter
     def year(self, value):
-        # year_validator(value)
+        year_validator(value)
         self._year = value
 
     @property
@@ -62,7 +64,7 @@ class Car:
 
     @price.setter
     def price(self, value):
-        # price_validator(value)
+        price_validator(value)
         self._price = value
 
     @property
@@ -71,7 +73,7 @@ class Car:
 
     @locked.setter
     def locked(self, value):
-        # locked_validator(value)
+        locked_validator(value)
         self._locked = value
 
     def __repr__(self):

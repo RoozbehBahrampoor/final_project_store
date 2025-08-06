@@ -104,7 +104,7 @@ class CarView:
             price_str = self.price.get()
 
             year_value = int(year_str) if year_str else 0
-            price_value = int(price_str.replace('$', '').replace(',', '').replace('.', '')) if price_str else 0
+            price_value = int(price_str.replace('.', '').replace(',', '')) if price_str else 0
 
             status, message = car_controller.save(
                 self.name.get(),
@@ -119,8 +119,8 @@ class CarView:
                 self.reset_form()
             else:
                 msg.showerror("Save Error", message)
-        except ValueError:
-            msg.showerror("Input Error", "Year and Price must be valid numbers.")
+        except ValueError as e:
+            msg.showerror("Input Error", str(e))
 
     def edit_click(self):
         car_controller = CarController()
@@ -129,7 +129,7 @@ class CarView:
             price_str = self.price.get()
 
             year_value = int(year_str) if year_str else 0
-            price_value = int(price_str.replace('$', '').replace(',', '').replace('.', '')) if price_str else 0
+            price_value = int(price_str.replace('.', '').replace(',', '')) if price_str else 0
 
             status, message = car_controller.edit(
                 self.code.get(),
@@ -145,8 +145,8 @@ class CarView:
                 self.reset_form()
             else:
                 msg.showerror("Edit Error", message)
-        except ValueError:
-            msg.showerror("Input Error", "Year and Price must be valid numbers.")
+        except ValueError as e:
+            msg.showerror("Input Error", str(e))
 
     def delete_click(self):
         car_controller = CarController()
@@ -166,7 +166,6 @@ class CarView:
 
             for car in car_list:
                 formatted_car = list(car)
-
                 formatted_car[5] = format_number_with_dots(formatted_car[5])
 
                 self.table.insert(
@@ -201,12 +200,32 @@ class CarView:
             return
 
         values = self.table.item(selected_item)["values"]
-        car = Car(*values)
-        self.code.set(car.code)
-        self.name.set(car.name)
-        self.model.set(car.model)
-        self.color.set(car.color)
-        self.year.set(car.year)
 
-        self.price.set(format_number_with_dots(car.price))
-        self.locked.set(bool(car.locked))
+        try:
+            values_list = list(values)
+
+            # تبدیل مقادیر به نوع داده مناسب قبل از ارسال به کلاس Car
+            # مقادیر خالی (None) را به مقادیر پیش‌فرض تبدیل می‌کنیم تا اعتبارسنجی با خطا مواجه نشود.
+            code_value = int(values_list[0]) if values_list[0] else 0
+            name_value = str(values_list[1]) if values_list[1] else ""
+            model_value = str(values_list[2]) if values_list[2] else ""
+            color_value = str(values_list[3]) if values_list[3] else ""
+            year_value = int(values_list[4]) if values_list[4] else 0
+
+            # قیمت را از فرمت نمایش (با نقطه) به عدد صحیح تبدیل می‌کنیم
+            price_str = str(values_list[5]).replace('.', '').replace(',', '')
+            price_value = int(price_str) if price_str else 0
+
+            locked_value = bool(values_list[6]) if values_list[6] is not None else False
+
+            car = Car(code_value, name_value, model_value, color_value, year_value, price_value, locked_value)
+
+            self.code.set(car.code)
+            self.name.set(car.name)
+            self.model.set(car.model)
+            self.color.set(car.color)
+            self.year.set(car.year)
+            self.price.set(format_number_with_dots(car.price))
+            self.locked.set(car.locked)
+        except Exception as e:
+            msg.showerror("Selection Error", f"An error occurred: {e}")
