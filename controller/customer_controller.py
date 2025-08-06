@@ -17,7 +17,7 @@ class CustomerController:
             customer = Customer(code, name, family, username, password, phone_number, locked)
             customer_repo = CustomerRepository()
             customer_repo.edit(customer)
-            return True, f"Customer edited {customer}"
+            return True, "Customer edited successfully."
         except Exception as e:
             return False, f"Error editing customer {e}"
 

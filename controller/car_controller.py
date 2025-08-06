@@ -17,7 +17,7 @@ class CarController:
             car = Car(code, name, model, color, year, price, locked)
             car_repo = CarRepository()
             car_repo.edit(car)
-            return True, f"Car edited {car}"
+            return True, "Car edited successfully."
         except Exception as e:
             return False, f"Error editing car {e}"
 

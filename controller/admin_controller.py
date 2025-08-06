@@ -17,7 +17,7 @@ class AdminController:
             admin = Admin(code, name, family, username, password, locked)
             admin_repo = AdminRepository()
             admin_repo.edit(admin)
-            return True, f"Admin edited {admin}"
+            return True, "Admin edited successfully."
         except Exception as e:
             return False, f"Error editing admin {e}"
 
