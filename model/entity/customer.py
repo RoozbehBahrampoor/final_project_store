@@ -1,4 +1,6 @@
 from model.tools.customer_validation import *
+
+
 class Customer:
     def __init__(self, code, name, family, username, password, phone_number, locked=False):
         self.code = code
@@ -15,7 +17,7 @@ class Customer:
 
     @code.setter
     def code(self, value):
-        # code_validator(value)
+        #code_validator(value)
         self._code = value
 
     @property
@@ -25,7 +27,7 @@ class Customer:
     @name.setter
     def name(self, value):
         name_validator(value)
-        self._name = value
+        self._name = value.capitalize()
 
     @property
     def family(self):
@@ -34,7 +36,7 @@ class Customer:
     @family.setter
     def family(self, value):
         family_validator(value)
-        self._family = value
+        self._family = value.capitalize()
 
     @property
     def username(self):
@@ -51,7 +53,7 @@ class Customer:
 
     @password.setter
     def password(self, value):
-        # password_validator(value)
+        password_validator(value)
         self._password = value
 
     @property
@@ -60,7 +62,7 @@ class Customer:
 
     @phone_number.setter
     def phone_number(self, value):
-        # phone_validator(value)
+        phone_number_validator(value)
         self._phone_number = value
 
     @property
@@ -69,7 +71,7 @@ class Customer:
 
     @locked.setter
     def locked(self, value):
-        # locked_validator(value)
+        locked_validator(value)
         self._locked = value
 
     def __repr__(self):

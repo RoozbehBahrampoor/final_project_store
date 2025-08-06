@@ -1,4 +1,3 @@
-from controller import customer_controller
 from controller.customer_controller import CustomerController
 from tkinter import *
 from tkinter import ttk as ttk
@@ -145,7 +144,7 @@ class CustomerView:
                     "",
                     END,
                     values=customer,
-                    tags="Locked" if customer [6] else "OK",
+                    tags="Locked" if customer[6] else "OK",
                 )
         else:
             msg.showerror("Error", "Error getting customers data")
@@ -169,11 +168,26 @@ class CustomerView:
         self.show_data_on_table(status, customer_list)
 
     def select_customer(self, event):
-        customer = Customer(*self.table.item(self.table.focus())["values"])
-        self.code.set(customer.code)
-        self.name.set(customer.name)
-        self.family.set(customer.family)
-        self.user_name.set(customer.username)
-        self.password.set(customer.password)
-        self.phone_number.set(customer.phone_number)
-        self.locked.set(bool(customer.locked))
+        selected_item = self.table.focus()
+        if not selected_item:
+            return
+
+        values = self.table.item(selected_item)["values"]
+
+        try:
+            # تبدیل مقادیر به نوع داده مناسب قبل از ارسال به کلاس Customer
+            converted_values = list(values)
+            converted_values[0] = int(converted_values[0])
+            converted_values[5] = str(converted_values[5])
+            converted_values[6] = bool(converted_values[6])
+
+            customer = Customer(*converted_values)
+            self.code.set(customer.code)
+            self.name.set(customer.name)
+            self.family.set(customer.family)
+            self.user_name.set(customer.username)
+            self.password.set(customer.password)
+            self.phone_number.set(customer.phone_number)
+            self.locked.set(customer.locked)
+        except Exception as e:
+            msg.showerror("Selection Error", f"An error occurred: {e}")
