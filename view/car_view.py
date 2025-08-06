@@ -6,6 +6,13 @@ from tkinter import messagebox as msg
 from model.entity.car import Car
 
 
+def format_number_with_dots(number):
+    try:
+        return "{:,.0f}".format(number).replace(',', '.')
+    except (ValueError, TypeError):
+        return str(number)
+
+
 class CarView:
     def __init__(self) -> None:
         self.win = Tk()
@@ -96,9 +103,7 @@ class CarView:
             year_str = self.year.get()
             price_str = self.price.get()
 
-
             year_value = int(year_str) if year_str else 0
-
             price_value = int(price_str.replace('$', '').replace(',', '').replace('.', '')) if price_str else 0
 
             status, message = car_controller.save(
@@ -115,14 +120,13 @@ class CarView:
             else:
                 msg.showerror("Save Error", message)
         except ValueError:
-            msg.showerror("Input Error", "Year and Price must be valid numbers. Do not include non-numeric characters.")
+            msg.showerror("Input Error", "Year and Price must be valid numbers.")
 
     def edit_click(self):
         car_controller = CarController()
         try:
             year_str = self.year.get()
             price_str = self.price.get()
-
 
             year_value = int(year_str) if year_str else 0
             price_value = int(price_str.replace('$', '').replace(',', '').replace('.', '')) if price_str else 0
@@ -142,7 +146,7 @@ class CarView:
             else:
                 msg.showerror("Edit Error", message)
         except ValueError:
-            msg.showerror("Input Error", "Year and Price must be valid numbers. Do not include non-numeric characters.")
+            msg.showerror("Input Error", "Year and Price must be valid numbers.")
 
     def delete_click(self):
         car_controller = CarController()
@@ -161,10 +165,14 @@ class CarView:
                 self.table.delete(item)
 
             for car in car_list:
+                formatted_car = list(car)
+
+                formatted_car[5] = format_number_with_dots(formatted_car[5])
+
                 self.table.insert(
                     "",
                     END,
-                    values=car,
+                    values=formatted_car,
                     tags="Locked" if car[6] else "OK",
                 )
         else:
@@ -199,5 +207,6 @@ class CarView:
         self.model.set(car.model)
         self.color.set(car.color)
         self.year.set(car.year)
-        self.price.set(car.price)
+
+        self.price.set(format_number_with_dots(car.price))
         self.locked.set(bool(car.locked))

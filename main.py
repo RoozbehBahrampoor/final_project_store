@@ -7,8 +7,8 @@ from view.car_view import CarView
 from view.house_view import HouseView
 
 admin_view = AdminView()
-car_view = CarView()
 customer_view = CustomerView()
+car_view = CarView()
 house_view = HouseView()
 
 create_connection()

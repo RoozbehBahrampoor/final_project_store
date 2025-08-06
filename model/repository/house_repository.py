@@ -46,7 +46,11 @@ class HouseRepository:
     def find_by_region_price(self, region, price):
         with sqlite3.connect("store_db.sqlite") as connection:
             cursor = connection.cursor()
-            cursor.execute("select * from houses where region like ? and price = ?", [region + "%", price])
+
+            query = "select * from houses where region like ? and price like ?"
+            params = [f"%{region}%", f"%{price}%"]
+
+            cursor.execute(query, params)
             house_list = cursor.fetchall()
             return house_list
 
@@ -77,3 +81,10 @@ class HouseRepository:
             cursor.execute("select * from houses where price between ? and ?", [start_price, end_price])
             house = cursor.fetchone()
             return house
+
+    def find_by_price(self, price):
+        with sqlite3.connect("store_db.sqlite") as connection:
+            cursor = connection.cursor()
+            cursor.execute("select * from houses where price = ?", [price])
+            house_list = cursor.fetchall()
+            return house_list

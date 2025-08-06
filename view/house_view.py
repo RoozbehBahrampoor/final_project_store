@@ -267,12 +267,14 @@ class HouseView:
 
         values = self.table.item(selected_item)["values"]
 
+
         self.code.set(values[0])
         self.region.set(values[1])
         self.address.set(values[2])
         self.floor.set(values[3])
         self.area.set(values[4])
         self.rooms.set(values[5])
+
 
         self.elevator.set(bool(values[6]))
         self.parking.set(bool(values[7]))
