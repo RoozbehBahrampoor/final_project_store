@@ -5,17 +5,28 @@ from model.repository.customer_repository import CustomerRepository
 class CustomerController:
     def save(self, name, family, username, password, phone_number, locked):
         try:
-            customer = Customer(None, name, family, username, password, phone_number, locked)
             customer_repo = CustomerRepository()
+
+            existing_customer = customer_repo.find_by_username(username)
+            if existing_customer:
+                return False, "Error: Username already exists."
+
+            customer = Customer(None, name, family, username, password, phone_number, locked)
             customer_repo.save(customer)
-            return True, f"Customer saved {customer}"
+            return True, "Customer saved successfully."
         except Exception as e:
             return False, f"Error saving customer {e}"
 
     def edit(self, code, name, family, username, password, phone_number, locked):
         try:
-            customer = Customer(code, name, family, username, password, phone_number, locked)
             customer_repo = CustomerRepository()
+            customer = Customer(code, name, family, username, password, phone_number, locked)
+
+
+            existing_customer = customer_repo.find_by_username(username)
+            if existing_customer and existing_customer[0] != code:
+                return False, "Error: Username already exists."
+
             customer_repo.edit(customer)
             return True, "Customer edited successfully."
         except Exception as e:

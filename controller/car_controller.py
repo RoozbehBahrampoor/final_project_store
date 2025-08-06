@@ -8,7 +8,7 @@ class CarController:
             car = Car(None, name, model, color, year, price, locked)
             car_repo = CarRepository()
             car_repo.save(car)
-            return True, f"Car saved {car}"
+            return True, "Car saved successfully."
         except Exception as e:
             return False, f"Error saving car {e}"
 

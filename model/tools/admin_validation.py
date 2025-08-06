@@ -1,36 +1,25 @@
 import re
 
-
 def code_validator(code):
-    try:
-        code = int(code)
-        if code <= 0:
-            raise ValueError("Invalid code !!!")
-    except:
+    if not (isinstance(code, int) and code > 0):
         raise ValueError("Invalid code !!!")
 
-
 def name_validator(name):
-    if not re.match(r".+", name):
+    if not re.match(r"^[a-zA-Z\s]{3,30}$", name):
         raise ValueError("Invalid name !!!")
 
-
 def family_validator(family):
-    if not re.match(r".+", family):
+    if not re.match(r"^[a-zA-Z\s]{3,30}$", family):
         raise ValueError("Invalid family !!!")
 
-
 def username_validator(username):
-    if not re.match(r".+", username):
-        raise ValueError("Invalid username !!!")
-
+    if not (isinstance(username, str) and len(username) >= 3):
+        raise ValueError("Username must be at least 3 characters long.")
 
 def password_validator(password):
-    password = str(password)
-    if not re.match(r"^[a-zA-Z0-9 _-]+$", password):
-        raise ValueError("Invalid password !!!")
-
+    if not (isinstance(password, str) and len(password) >= 6):
+        raise ValueError("Password must be at least 6 characters long.")
 
 def locked_validator(locked):
-    if not re.match(r"^[01]$", str(locked)):
+    if not isinstance(locked, bool):
         raise ValueError("Invalid locked !!!")

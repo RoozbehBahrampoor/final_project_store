@@ -1,3 +1,4 @@
+from controller import admin_controller
 from controller.admin_controller import AdminController
 from tkinter import *
 from tkinter import ttk as ttk
@@ -91,7 +92,6 @@ class AdminView:
             self.user_name.get(),
             self.password.get(),
             self.locked.get(),
-
         )
         if status:
             msg.showinfo("Save", message)
@@ -158,10 +158,23 @@ class AdminView:
         self.show_data_on_table(status, admin_list)
 
     def select_admin(self, event):
-        admin = Admin(*self.table.item(self.table.focus())["values"])
-        self.code.set(admin.code)
-        self.name.set(admin.name)
-        self.family.set(admin.family)
-        self.user_name.set(admin.username)
-        self.password.set(admin.password)
-        self.locked.set(bool(admin.locked))
+        selected_item = self.table.focus()
+        if not selected_item:
+            return
+
+        values = self.table.item(selected_item)["values"]
+
+        try:
+            # تبدیل مقدار 'locked' به بولی قبل از ارسال به کلاس Admin
+            values = list(values)
+            values[5] = bool(values[5])
+
+            admin = Admin(*values)
+            self.code.set(admin.code)
+            self.name.set(admin.name)
+            self.family.set(admin.family)
+            self.user_name.set(admin.username)
+            self.password.set(admin.password)
+            self.locked.set(admin.locked)
+        except Exception as e:
+            msg.showerror("Selection Error", f"An error occurred: {e}")

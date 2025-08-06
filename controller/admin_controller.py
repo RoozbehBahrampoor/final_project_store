@@ -8,7 +8,7 @@ class AdminController:
             admin = Admin(None, name, family, username, password, locked)
             admin_repo = AdminRepository()
             admin_repo.save(admin)
-            return True, f"Admin saved {admin}"
+            return True, "Admin saved successfully."
         except Exception as e:
             return False, f"Error saving admin {e}"
 

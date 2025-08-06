@@ -16,7 +16,7 @@ class Admin:
 
     @code.setter
     def code(self, value):
-        # code_validator(value)
+        #code_validator(value)
         self._code = value
 
     @property
@@ -26,7 +26,7 @@ class Admin:
     @name.setter
     def name(self, value):
         name_validator(value)
-        self._name = value
+        self._name = value.capitalize()
 
     @property
     def family(self):
@@ -35,7 +35,7 @@ class Admin:
     @family.setter
     def family(self, value):
         family_validator(value)
-        self._family = value
+        self._family = value.capitalize()
 
     @property
     def username(self):
@@ -61,7 +61,7 @@ class Admin:
 
     @locked.setter
     def locked(self, value):
-        # locked_validator(value)
+        locked_validator(value)
         self._locked = value
 
     def __repr__(self):
