@@ -122,7 +122,7 @@ class House:
 
     @locked.setter
     def locked(self, value):
-        # locked_validator(value)
+        locked_validator(value)
         self._locked = value
 
     def __repr__(self):
